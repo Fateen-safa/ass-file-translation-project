@@ -54,12 +54,21 @@ def replace_words_in_ass(input_file, output_file, replacements):
             start_time = subtitle.start.strftime("%H:%M:%S.%f")[:-4]  # Trim to 2 decimal places
             end_time = subtitle.end.strftime("%H:%M:%S.%f")[:-4]  # Trim to 2 decimal places
 
+            # Handle missing attributes with default values
+            layer = getattr(subtitle, 'layer', 0)  # Default layer is 0
+            style = getattr(subtitle, 'style', 'Default')  # Default style is 'Default'
+            name = getattr(subtitle, 'name', '')  # Default name is empty
+            margin_l = getattr(subtitle, 'margin_l', 0)  # Default margin_l is 0
+            margin_r = getattr(subtitle, 'margin_r', 0)  # Default margin_r is 0
+            margin_v = getattr(subtitle, 'margin_v', 0)  # Default margin_v is 0
+            effect = getattr(subtitle, 'effect', '')  # Default effect is empty
+
             # Format the subtitle line according to ASS specifications
-            ##text_input = f"Dialogue: {subtitle.layer},{start_time},{end_time},{subtitle.style},{subtitle.name},{subtitle.margin_l},{subtitle.margin_r},{subtitle.margin_v},{subtitle.effect},{new_text}\n"
-            ##f.write(text_input)
+            text_input = f"Dialogue: {layer},{start_time},{end_time},{style},{name},{margin_l},{margin_r},{margin_v},{effect},{new_text}\n"
+            f.write(text_input)
 
 # Example usage
 replacements = {
-    "تجلب": "بتثتسنمبتسنيتبينتمنبتسمنتبنعم",
+    "كل" : "اذا نحن هنا ؟؟؟ ^__^ " 
 }
-replace_words_in_ass('env/test.ass', 'env/output.ass', replacements)
+replace_words_in_ass('input_test.ass', 'output.ass', replacements)
